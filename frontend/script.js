@@ -316,10 +316,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // For login.html
     if (window.location.pathname.includes('login.html')) {
-        const loginForm = document.getElementById('loginForm'); // Use ID
+        const loginForm = document.getElementById('loginForm');
         if (loginForm) {
-            loginForm.addEventListener('submit', function(e) { // Use addEventListener
-                e.preventDefault();
+            console.log('Login form found, attaching listener.'); // <--- ADDED THIS LINE
+            loginForm.addEventListener('submit', function(e) {
+                console.log('Login form submitted, preventDefault called.'); // <--- ADDED THIS LINE
+                e.preventDefault(); // This stops the default form submission!
                 loginUser();
             });
         } else {
