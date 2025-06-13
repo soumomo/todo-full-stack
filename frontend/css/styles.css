@@ -424,5 +424,6 @@ h2 {
   font-size: 1.1rem;
   font-weight: bold;
   padding: 10px; /* Apply 10px padding on all sides */
+  transition: background 0.2s; /* Added to explicitly match .signup-btn */
   /* Inherits height: 40px, min-width, display, align-items, etc. from .nav-button-style */
 }
