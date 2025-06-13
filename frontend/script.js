@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://your-backend.vercel.app/api';
+const API_BASE_URL = 'https://todo-full-stack-tau.vercel.app/api';
 
 function getToken(){
     return localStorage.getItem('token');
