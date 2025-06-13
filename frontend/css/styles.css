@@ -63,6 +63,7 @@ header, .header {
   cursor: pointer;
   transition: background 0.2s;
   white-space: nowrap;
+  box-sizing: border-box; /* Added for consistent sizing */
 }
 .login-btn:hover, .signup-btn:hover {
   background: #463a5e;
@@ -116,6 +117,7 @@ header, .header {
   display: inline-flex; /* To center text vertically like buttons */
   align-items: center;
   justify-content: center;
+  box-sizing: border-box; /* Added for consistent sizing */
 }
 
 .nav-button-style:hover {
