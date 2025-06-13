@@ -23,7 +23,7 @@ const allowedOrigins = [
   'https://todo-full-stack-tau.vercel.app',  // Your backend Vercel URL (if it ever serves content directly or for other APIs)
   'http://localhost:5500', // Common local dev port for live server
   'http://127.0.0.1:5500', // Another common local dev port
-  'https://taskmaster-deephivex.vercel.app/', // Added new frontend URL
+  'https://taskmaster-deephivex.vercel.app', // Added new frontend URL
   // Add any other local development ports you use for the frontend, e.g., if you use a different port for `live-server`
 ];
 
