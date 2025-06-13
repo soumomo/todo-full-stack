@@ -3,17 +3,23 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-mongoose.connect("mongodb+srv://momo:5JCBEcGO7li1driF@cluster0.chwt5ha.mongodb.net/TaskMaster");
+mongoose.connect(process.env.MONGODB_URI);
 const { UserModel, TodoModel } = require("./db");
 
 
 const app = express();
 app.use(express.json());
-app.use(cors());
 
-const SECRET = 'gruzlovesamrit';
+// Configure CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'https://your-frontend-url.vercel.app', // Replace with your actual frontend URL or use env var
+  credentials: true
+}));
 
-app.post('/signup', (req, res) => { // Removed async from here as bcrypt callbacks are used
+// const SECRET = \'gruzlovesamrit\';
+const SECRET = process.env.JWT_SECRET;
+
+app.post('/api/signup', (req, res) => { // Removed async from here as bcrypt callbacks are used
     const { name, email, password: plainTextPassword } = req.body;
 
     UserModel.findOne({ email }).then(existingUser => {
@@ -51,7 +57,7 @@ app.post('/signup', (req, res) => { // Removed async from here as bcrypt callbac
     });
 });
 
-app.post('/login' , async(req,res)=>{
+app.post('/api/login' , async(req,res)=>{
     const {email , password} = req.body;
     // Find user by email first
     const user = await UserModel.findOne({email});
@@ -105,7 +111,7 @@ function authenticateToken(req , res , next){
 }
 
 
-app.get('/me', authenticateToken, async(req, res) => {
+app.get('/api/me', authenticateToken, async(req, res) => {
     const user = await UserModel.findById(req.user.userId);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({
@@ -115,7 +121,7 @@ app.get('/me', authenticateToken, async(req, res) => {
 });
 
 
-app.post('/todo' , authenticateToken , async(req,res)=>{
+app.post('/api/todo' , authenticateToken , async(req,res)=>{
     const {title} = req.body;
     if(!title){
         return res.status(400).json({
@@ -134,7 +140,7 @@ app.post('/todo' , authenticateToken , async(req,res)=>{
     })
 })
 
-app.get('/todos' , authenticateToken , async(req,res)=>{
+app.get('/api/todos' , authenticateToken , async(req,res)=>{
     const todos = await TodoModel.find({
         userId :req.user.userId
     })
@@ -142,7 +148,7 @@ app.get('/todos' , authenticateToken , async(req,res)=>{
     res.json({todos})
 })
 
-app.delete('/todo/:id' , authenticateToken , async(req,res)=>{
+app.delete('/api/todo/:id' , authenticateToken , async(req,res)=>{
     try{
         const todoId = req.params.id;
 
@@ -171,7 +177,7 @@ app.delete('/todo/:id' , authenticateToken , async(req,res)=>{
 
 })
 
-app.put('/todo/:id' , authenticateToken , async(req , res)=>{
+app.put('/api/todo/:id' , authenticateToken , async(req , res)=>{
     try{
         const todoId = req.params.id;
         const {title,done} = req.body;
@@ -211,4 +217,11 @@ app.put('/todo/:id' , authenticateToken , async(req , res)=>{
     }
 })
 
-app.listen(3000 , ()=> console.log("Server  is running on port 3000."))
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
