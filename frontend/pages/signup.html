@@ -9,11 +9,16 @@
 </head>
 <body>
     <header>
-        <div class="logo-group">
-          <img src="../utilities/logo.png" alt="TaskMaster Logo" class="logo-icon">
-          <span class="logo-text">TaskMaster</span>
-        </div>
-      </header>
+      <div class="logo-group">
+        <img src="../utilities/logo.png" alt="TaskMaster Logo" class="logo-icon">
+        <span class="logo-text">TaskMaster</span>
+      </div>
+      <nav>
+        <a href="#" id="go-to-todos-nav" style="display: none;">My Todos</a>
+        <a href="#" id="logout-link-nav" style="display:none;">Logout</a>
+      </nav>
+      <button class="login-btn" onclick="location.href='login.html'" style="display:none;" id="login-btn-header">Log in</button>
+    </header>
     <div class="auth-container">
         <div class="left">
             <img src="../utilities/rise.png" alt="Signup Image" class="signup-image">
@@ -50,6 +55,41 @@
             <a href="../index.html" class="back-home-link">Back to Home</a>
         </div>
     </div>
-        <script src="../script.js" defer></script>
+    <script src="../script.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('token');
+        const goToTodosNav = document.getElementById('go-to-todos-nav');
+        const logoutLinkNav = document.getElementById('logout-link-nav');
+        const loginBtnHeader = document.getElementById('login-btn-header');
+
+        if (token) {
+          // User is logged in, should not be on signup page, redirect to todos
+          window.location.href = 'todo.html'; 
+        } else {
+          // User is not logged in
+          if (logoutLinkNav) logoutLinkNav.style.display = 'none';
+          if (loginBtnHeader) loginBtnHeader.style.display = 'inline-block'; // Show login button
+          if (goToTodosNav) goToTodosNav.style.display = 'none'; // Hide "My Todos"
+        }
+
+        // Event listeners for nav links (though some are not expected to be visible here)
+        if (goToTodosNav) {
+          goToTodosNav.addEventListener('click', function(e) {
+            e.preventDefault();
+            // This link shouldn't be visible, but if clicked, go to login (as token is absent)
+            window.location.href = 'login.html';
+          });
+        }
+
+        if (logoutLinkNav) {
+          logoutLinkNav.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            window.location.href = '../index.html'; // Go to home page after logout
+          });
+        }
+      });
+    </script>
 </body>
 </html>
