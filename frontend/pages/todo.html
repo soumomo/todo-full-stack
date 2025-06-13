@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Master</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+<body>
+  <div class="layout-container">
+    <header>
+        <div class="logo-group">
+          <img src="../utilities/logo.png" alt="TaskMaster Logo" class="logo-icon">
+          <span class="logo-text">TaskMaster</span>
+        </div>
+        <div class="button-group">
+            <button onclick="location.href='../index.html'" class="login-btn">Home</button> 
+            <button id="logout-btn" class="signup-btn">Logout</button>
+        </div>
+    </header>
+    <main class="todo-page-main">
+      <div class="layout-content-container">
+        <h1 class="main-title intro"></h1>
+        <h2>Here's your to-do list for today.</h2>
+        <div class="input-container">
+          <form id="todo-form" autocomplete="off" style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="todo-input" placeholder="Enter your tasks.." />
+            <button id="add-todo-btn" type="submit" class="signup-btn">Add Todo</button>
+          </form>
+        </div>
+        <section class="todos-section">
+          <h3>Todos:</h3>
+          <ul id="todo-list"></ul>
+          <div id="empty-todo-message" style="display: none; text-align: center; margin-top: 20px;">
+            <p>No tasks pending. Why not add one?</p>
+            <p style="font-style: italic; margin-top: 10px;">"~to create something out of nothing!"</p>
+          </div>
+        </section>
+        <section class="completed-todos-section">
+            <h3 class="lower-heading"></h3>
+            <ul id="completed-todo-list"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="../script.js"></script>
+</body>
+</html>
