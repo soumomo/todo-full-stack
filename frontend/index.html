@@ -15,18 +15,102 @@
         <img src="utilities/logo.png" alt="TaskMaster Logo" class="logo-icon">
         <span class="logo-text">TaskMaster</span>
       </div>
-      <button class="login-btn" onclick="location.href='pages/login.html'">Log in</button>
+      <nav>
+        <a href="#" id="go-to-todos-nav" class="nav-link-button" style="display: none;">My Todos</a>
+        <a href="#" id="logout-link-nav" class="nav-link-button" style="display:none;">Logout</a>
+      </nav>
+      <button class="login-btn" onclick="location.href='pages/login.html'" style="display:none;" id="login-btn-header">Log in</button>
     </header>
     <main>
       <div class="layout-content-container">
         <h1 class="main-title">Welcome to TaskMaster</h1>
         <p class="main-desc">Unlock your productivity. Manage your tasks efficiently and stay organized with our intuitive platform.</p>
-        <button class="get-started-btn" onclick="location.href='pages/signup.html'">
+        <button class="get-started-btn" onclick="location.href='pages/signup.html'" id="get-started-btn-main">
           <span>Get Started</span>
           <span class="material-icons-outlined">arrow_forward</span>
         </button>
+        <button id="go-to-todos-btn" class="go-to-todos-btn" style="display:none;">Go to My Todos</button>
       </div>
     </main>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      const goToTodosNav = document.getElementById('go-to-todos-nav');
+      const loginLinkNav = document.getElementById('login-link-nav'); // This will be null as it's not in the HTML
+      const logoutLinkNav = document.getElementById('logout-link-nav');
+      const loginBtnHeader = document.getElementById('login-btn-header');
+      const getStartedBtnMain = document.getElementById('get-started-btn-main');
+      const goToTodosBtn = document.getElementById('go-to-todos-btn'); // Button in main content
+
+      const onIndexPage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+      const onTodosPage = window.location.pathname.endsWith('pages/todo.html');
+
+      if (token) {
+        // User is logged in
+        if (loginLinkNav) loginLinkNav.style.display = 'none'; // Gracefully handles if null
+        if (logoutLinkNav) logoutLinkNav.style.display = 'inline';
+        if (loginBtnHeader) loginBtnHeader.style.display = 'none';
+        
+        if (onIndexPage) { // Specific to index.html content
+            if (getStartedBtnMain) getStartedBtnMain.style.display = 'none'; 
+            if (goToTodosBtn) goToTodosBtn.style.display = 'inline-block'; 
+        }
+
+        // Control visibility for 'My Todos' nav link as per new requirement
+        if (goToTodosNav) {
+            if (onTodosPage) { // Show ONLY on todo.html page when logged in
+                goToTodosNav.style.display = 'inline';
+            } else { // Hide on other pages (e.g., index.html) even if logged in
+                goToTodosNav.style.display = 'none';
+            }
+        }
+
+      } else {
+        // User is not logged in
+        if (loginLinkNav) loginLinkNav.style.display = 'inline'; // Gracefully handles if null
+        if (logoutLinkNav) logoutLinkNav.style.display = 'none';
+        if (loginBtnHeader) loginBtnHeader.style.display = 'inline-block'; 
+
+        if (onIndexPage) { // Specific to index.html content
+            if (getStartedBtnMain) getStartedBtnMain.style.display = 'inline-block'; 
+            if (goToTodosBtn) goToTodosBtn.style.display = 'none'; 
+        }
+        
+        if (goToTodosNav) { // Hide 'My Todos' nav link if not logged in
+            goToTodosNav.style.display = 'none';
+        }
+      }
+
+      // Event listener for 'My Todos' nav link (if it exists and is clicked)
+      if (goToTodosNav) {
+        goToTodosNav.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (localStorage.getItem('token')) {
+            window.location.href = 'pages/todo.html';
+          } else {
+            window.location.href = 'pages/login.html';
+          }
+        });
+      }
+
+      // Event listener for 'Go to My Todos' button in main content of index.html
+      if (goToTodosBtn) {
+        goToTodosBtn.addEventListener('click', function() {
+          // This button is only shown when logged in on index.html
+          window.location.href = 'pages/todo.html'; 
+        });
+      }
+
+      // Event listener for 'Logout' nav link
+      if (logoutLinkNav) {
+        logoutLinkNav.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          window.location.href = 'index.html'; 
+        });
+      }
+    });
+  </script>
 </body>
 </html>

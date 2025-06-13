@@ -68,6 +68,31 @@ header, .header {
   background: #463a5e;
 }
 
+/* Style for nav links to look like buttons */
+.nav-link-button {
+  display: inline-block; /* To allow padding and sizing */
+  min-width: 100px;
+  height: 40px;
+  line-height: 40px; /* Vertically center text */
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  text-decoration: none; /* Remove underline from links */
+  text-align: center;
+}
+
+.nav-link-button:hover {
+  background: #463a5e;
+  color: var(--text-color); /* Ensure text color doesn't change on hover if it's a link */
+}
+
 .get-started-btn {
   display: inline-flex;
   align-items: center;
