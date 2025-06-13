@@ -102,7 +102,7 @@ header, .header {
 /* Style for navigation items that should look like buttons */
 .nav-button-style {
   min-width: 100px;
-  height: 48px; /* Updated from 40px to match other larger buttons */
+  height: 40px;
   background: var(--secondary-color);
   color: var(--text-color);
   border: none;
@@ -414,4 +414,15 @@ h2 {
     min-width: 0;
     padding: 1rem;
   }
+}
+
+/* Specific style for the logout navigation link to match signup button */
+#logout-link-nav {
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 10px; /* Apply 10px padding on all sides */
+  /* Inherits height: 40px, min-width, display, align-items, etc. from .nav-button-style */
 }
