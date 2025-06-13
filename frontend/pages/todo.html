@@ -11,15 +11,14 @@
 <body>
   <div class="layout-container">
     <header>
-      <div class="logo-group">
-        <img src="../utilities/logo.png" alt="TaskMaster Logo" class="logo-icon">
-        <span class="logo-text">TaskMaster</span>
-      </div>
-      <nav>
-        <a href="#" id="go-to-todos-nav" style="display: none;">My Todos</a>
-        <a href="#" id="logout-link-nav" style="display:none;">Logout</a>
-      </nav>
-      <button class="login-btn" onclick="location.href='login.html'" style="display:none;" id="login-btn-header">Log in</button>
+        <div class="logo-group">
+          <img src="../utilities/logo.png" alt="TaskMaster Logo" class="logo-icon">
+          <span class="logo-text">TaskMaster</span>
+        </div>
+        <div class="button-group">
+            <button onclick="location.href='../index.html'" class="login-btn">Home</button> 
+            <button id="logout-btn" class="signup-btn">Logout</button>
+        </div>
     </header>
     <main class="todo-page-main">
       <div class="layout-content-container">
@@ -47,66 +46,5 @@
     </main>
   </div>
   <script src="../script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const token = localStorage.getItem('token');
-      const goToTodosNav = document.getElementById('go-to-todos-nav');
-      const logoutLinkNav = document.getElementById('logout-link-nav');
-      const loginBtnHeader = document.getElementById('login-btn-header');
-
-      if (token) {
-        // User is logged in
-        if (logoutLinkNav) logoutLinkNav.style.display = 'inline';
-        if (loginBtnHeader) loginBtnHeader.style.display = 'none';
-
-        if (goToTodosNav) {
-          // Show "My Todos" nav link only if logged in AND on pages/todo.html
-          if (window.location.pathname.includes('pages/todo.html')) {
-            goToTodosNav.style.display = 'inline';
-          } else {
-            // This case should not be hit if this script is specific to todo.html
-            // but as a fallback, ensure it's hidden if not on todo.html
-            goToTodosNav.style.display = 'none';
-          }
-        }
-      } else {
-        // User is not logged in (should redirect to login if trying to access todo.html)
-        // For safety, hide elements and redirect.
-        if (logoutLinkNav) logoutLinkNav.style.display = 'none';
-        if (loginBtnHeader) loginBtnHeader.style.display = 'inline-block'; // Show login if somehow on this page without token
-        if (goToTodosNav) goToTodosNav.style.display = 'none';
-        // Redirect to login page if no token and on todo page
-        if (!window.location.pathname.endsWith('login.html') && !window.location.pathname.endsWith('signup.html') && !window.location.pathname.endsWith('index.html')) {
-             // Check if already on index.html to prevent redirect loop if token is lost there
-            if(window.location.pathname.includes('pages/todo.html')) {
-                window.location.href = 'login.html';
-            }
-        }
-      }
-
-      if (goToTodosNav) {
-        goToTodosNav.addEventListener('click', function(e) {
-          e.preventDefault();
-          // Already on todo.html, so no action or link to self.
-        });
-      }
-
-      if (logoutLinkNav) {
-        logoutLinkNav.addEventListener('click', function(e) {
-          e.preventDefault();
-          localStorage.removeItem('token');
-          window.location.href = '../index.html'; // Navigate to home page after logout
-        });
-      }
-      
-      // The existing logout button functionality from script.js might conflict or be redundant.
-      // Let's ensure the new nav logout is the primary one.
-      const oldLogoutBtn = document.getElementById('logout-btn');
-      if (oldLogoutBtn) {
-          oldLogoutBtn.style.display = 'none'; // Hide the old logout button
-      }
-
-    });
-  </script>
 </body>
 </html>
