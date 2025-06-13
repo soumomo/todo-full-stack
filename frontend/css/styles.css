@@ -102,7 +102,7 @@ header, .header {
 /* Style for navigation items that should look like buttons */
 .nav-button-style {
   min-width: 100px;
-  height: 40px;
+  height: 48px; /* Updated from 40px to match other larger buttons */
   background: var(--secondary-color);
   color: var(--text-color);
   border: none;
