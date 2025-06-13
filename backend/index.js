@@ -11,10 +11,41 @@ const app = express();
 app.use(express.json());
 
 // Configure CORS
+/*
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'https://your-frontend-url.vercel.app', // Replace with your actual frontend URL or use env var
   credentials: true
 }));
+*/
+
+const allowedOrigins = [
+  'https://todo-full-stack-st9x.vercel.app', // Your frontend Vercel URL
+  'https://todo-full-stack-tau.vercel.app',  // Your backend Vercel URL (if it ever serves content directly or for other APIs)
+  'http://localhost:5500', // Common local dev port for live server
+  'http://127.0.0.1:5500' // Another common local dev port
+  // Add any other local development ports you use for the frontend, e.g., if you use a different port for `live-server`
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g., mobile apps, curl)
+    if (!origin) return callback(null, true);
+    
+    // Vercel preview URLs can have dynamic subdomains, so we need a more flexible check for them
+    // This regex checks for your-vercel-project-name-*.vercel.app or your-vercel-project-name.vercel.app
+    const vercelPreviewPattern = /^https:\/\/todo-full-stack-st9x(-[a-zA-Z0-9]+)?\.vercel\.app$/;
+
+    if (allowedOrigins.includes(origin) || vercelPreviewPattern.test(origin)) {
+      callback(null, true);
+    } else {
+      console.error('CORS error: Origin not allowed:', origin); // Log the blocked origin
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 // const SECRET = \'gruzlovesamrit\';
 const SECRET = process.env.JWT_SECRET;
