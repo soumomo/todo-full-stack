@@ -45,9 +45,9 @@ header, .header {
 }
 
 .logo-icon {
-  height: 1.2em; /* Relative to parent font-size, makes it ~2.4rem */
-  width: auto;   /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure logo scales well */
+  width: 32px;
+  height: 32px;
+  color: var(--primary-color);
 }
 
 .login-btn, .signup-btn {
@@ -107,12 +107,6 @@ main {
   padding: 3rem 1rem 2rem 1rem;
   text-align: center;
 }
-
-/* Specific styles for todo.html main content area */
-main.todo-page-main {
-  align-items: flex-start; /* Aligns .layout-content-container to the top of main */
-}
-
 .layout-content-container {
   width: 100%;
   max-width: 600px;
@@ -121,15 +115,6 @@ main.todo-page-main {
   flex-direction: column;
   align-items: center;
 }
-
-.todos-section,
-.completed-todos-section {
-  width: 100%; /* Ensure sections take full width of layout-content-container */
-  display: flex; /* Use flex to manage children like ul properly */
-  flex-direction: column; /* Stack children vertically */
-  align-items: stretch; /* Stretch children like ul to fill width */
-}
-
 .main-title {
   font-size: 2.5rem;
   font-weight: bold;
@@ -290,7 +275,6 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 100%; /* Ensure ul takes full width of its container (the section) */
 }
 li {
   background-color: #2a2933;
@@ -310,9 +294,6 @@ li span {
   flex: 1;
   font-size: 1rem;
   word-break: break-word;
-  min-height: 1.5em; /* Ensures a minimum height */
-  line-height: 1.5; /* Improves readability for wrapped text */
-  min-width: 0; /* Allows the span to shrink and wrap text properly within flex layout */
 }
 .completed {
   text-decoration: line-through;
@@ -325,17 +306,9 @@ li button, .delete-btn {
   padding: 0.3rem 0.6rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, opacity 0.2s, visibility 0.2s; /* Added opacity and visibility to transition */
-  opacity: 0; /* Hidden by default */
-  visibility: hidden; /* Hidden by default */
+  transition: background 0.2s, color 0.2s;
 }
-
-li:hover button, li:hover .delete-btn { /* Show button on li hover */
-  opacity: 1;
-  visibility: visible;
-}
-
-li button:hover, .delete-btn:hover { /* Styles for button hover (when visible) */
+li button:hover, .delete-btn:hover {
   background: #ff4b4b;
   color: #fff;
 }
