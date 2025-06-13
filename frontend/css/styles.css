@@ -98,6 +98,31 @@ header, .header {
   transform: translateX(4px);
 }
 
+/* Style for navigation items that should look like buttons */
+.nav-button-style {
+  min-width: 100px;
+  height: 40px;
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  text-decoration: none; /* Remove underline from links */
+  display: inline-flex; /* To center text vertically like buttons */
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-button-style:hover {
+  background: #463a5e;
+  color: var(--text-color); /* Ensure text color remains on hover for links */
+}
+
 /* Main Container */
 main {
   flex: 1;
